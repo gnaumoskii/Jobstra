@@ -1,2 +1,8 @@
 @import "./theme/reset";
+@import "./theme/variables";
 
+@import "./pages/home/HomePage.scss";
+
+body {
+    background-color: $blue-dark;
+}
