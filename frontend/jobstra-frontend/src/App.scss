@@ -1,5 +1,13 @@
 @import "./theme/reset";
 @import "./theme/variables";
+@import "./theme/mixins";
+
+@import "./components/header/Header.scss";
+@import "./components/navbar/Navbar.scss";
+@import "./components/job-application-card/JobApplicationCard.scss";
+@import "./components/job-application-list/JobApplicationList.scss";
+@import "./components/modal/Modal.scss";
+@import "./components/modal/application/add-application-form/AddApplicationForm.scss";
 
 @import "./pages/home/HomePage.scss";
 

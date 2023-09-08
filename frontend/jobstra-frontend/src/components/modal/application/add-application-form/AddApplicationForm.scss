@@ -1,0 +1,89 @@
+.form-add {
+    font-family: $montserrat;
+    padding: 16px;
+    width: 400px;
+    
+    &__title {
+        color: $blue-dark;
+        font-size: 24px;
+        padding: 12px 0;
+        border-bottom: 1px solid $burgundy;
+        margin-bottom: 16px;
+    }
+
+    &__input-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+        &__label {
+            color: $blue-dark;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        &__input {
+
+            background-color: $orange-medium-light;
+            border-radius: 4px;
+            border: none;
+            color: $blue-dark;
+            outline: none;
+            padding: 4px;
+            font-weight: 500;
+
+        }
+
+        & textarea {
+            max-width: 100%;
+            max-height: 200px;
+         
+        }
+    }
+
+    &__validation-message {
+        color: $blue-dark;
+        font-weight: bold;
+        font-style: italic;
+        
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: end;
+        padding-top: 16px;
+        margin-bottom: 12px;
+        &__btn-add,
+        &__btn-cancel {
+            @include button-default;
+            margin: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        &__btn-add {
+            background-color: $purple;
+            color: $orange;
+            transition: 0.2s ease-out;
+
+            &:hover {
+                
+                color: $orange-light;
+            }
+        }
+        
+        &__btn-cancel {
+            border: 2px solid $purple;
+            color: $purple;
+            transition: 0.2s ease-out;
+            background-image: linear-gradient(to right, $orange 50%, $purple 50%);
+            background-size: 200%;
+            
+            &:hover {
+                border: 2px solid $blue-dark;
+                background-position: -100%;
+                color: $orange-light;
+            }
+        }
+    }
+}

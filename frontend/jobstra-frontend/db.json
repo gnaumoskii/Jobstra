@@ -1,0 +1,18 @@
+{
+  "applications": [
+    {
+      "company_name": "One Inside",
+      "job_position": "Frontend Developer Intern",
+      "created_at": "2023-09-08T15:48:53.898Z",
+      "interview_description": "very good and relaxing interview without pressure",
+      "id": 1
+    },
+    {
+      "company_name": "t",
+      "job_position": "s",
+      "created_at": "2023-09-08T16:49:26.798Z",
+      "interview_description": "",
+      "id": 2
+    }
+  ]
+}

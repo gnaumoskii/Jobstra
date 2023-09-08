@@ -1,0 +1,64 @@
+.nav {
+    display: flex;
+    justify-content: center;
+    //margin-top: 48px;
+    &__link {
+        font-family: $montserrat;
+        font-weight: 600;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0 24px;
+        text-decoration: none;
+        color: $blue-dark;
+        
+        transition: color 0.2s ease-out;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            border-bottom: 2px solid $blue-dark;
+            transition: width 0.2s ease-out;
+        }
+        
+        &:hover {
+            &::after {
+                width: 100%;
+                border-bottom: 2px solid $blue-dark;
+            }
+        }
+
+        &.active {
+            position: relative;
+            color: $cream;
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                border-bottom: 2px solid $cream;
+                transition: border-bottom 0.2s ease-out;
+                animation: width-overflow 0.3s ease-out;
+            }
+        }
+    }
+}
+
+@keyframes width-overflow {
+    0% {
+        width: 100%;
+    }
+    
+    15% {
+        width: 115%;
+    }
+
+    100% {
+        width: 100%;
+    }
+
+
+}

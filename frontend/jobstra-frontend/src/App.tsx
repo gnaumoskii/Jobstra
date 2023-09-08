@@ -13,6 +13,10 @@ function App() {
               {
                 index: true,
                 element: <HomePage />,
+              },
+              {
+                path: "interviews",
+                element: <HomePage />,
               }
             ],
         },
