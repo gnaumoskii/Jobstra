@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
-import { createApplication } from "../../../../services/api/apiService";
+import { useRef, useState, useContext } from "react";
+import { createApplication } from "../../../../services/api/applicationsApi";
+import { ApplicationsContext } from "../../../job-application-list/JobApplicationList";
+import { Application } from "../../../../interfaces/Application";
 
 interface Validation {
   hasError: boolean;
@@ -11,10 +13,10 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
   const companyNameRef = useRef<HTMLInputElement>(null);
   const jobPositionRef = useRef<HTMLInputElement>(null);
   const interviewDescriptionRef= useRef<HTMLTextAreaElement>(null);
+  const { setApplications } = useContext(ApplicationsContext);
 
   const validateForm = (): boolean => {
     const companyName = companyNameRef.current?.value || "";
-    console.log(companyName)
     const jobPosition = jobPositionRef.current?.value  || "";
     if(companyName.trim().length === 0 && jobPosition.trim().length === 0) {
       setValidation({hasError: true, message: "Please enter Company Name and Job Position."});
@@ -53,7 +55,13 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
       if(!validateForm()) {
         return;
       }
-      await createApplication(application);
+      const data: Application = await createApplication(application);
+      
+      setApplications((prevState): Application[] => {
+        console.log(prevState);
+        console.log(data);
+        return [...prevState, data]
+      });
       closeModal();
     } catch (error) {
       console.log(error);

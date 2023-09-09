@@ -1,18 +1,21 @@
-import { useEffect, useState, useReducer } from "react";
-import JobApplicationCard, { Application } from "../job-application-card/JobApplicationCard";
+import React, { useEffect, useState, useReducer } from "react";
+import JobApplicationCard from "../job-application-card/JobApplicationCard";
 import Modal from "../modal/Modal";
 import AddApplicationForm from "../modal/application/add-application-form/AddApplicationForm";
+import { Application } from "../../interfaces/Application";
+
+export const ApplicationsContext = React.createContext<{applications: Application[], setApplications: React.Dispatch<React.SetStateAction<Application[]>>}>({});
 
 enum ApplicationModalsType {
   ADD = 'ADD',
   EDIT = 'EDIT',
-  DELETE = 'DELETE'
+  DETAILS = 'DETAILS'
 }
 
 interface ApplicationModalsState {
   showAddModal: boolean;
   showEditModal: boolean;
-  showDeleteModal: boolean;
+  showDetailsModal: boolean;
 }
 
 interface Loading {
@@ -28,7 +31,7 @@ export interface ApplicationModalsAction {
 const InitialApplicationModalsState: ApplicationModalsState = {
     showAddModal: false,
     showEditModal: false,
-    showDeleteModal: false
+    showDetailsModal: false
 }
 
 const applicationModalReducer = (state: ApplicationModalsState , action: ApplicationModalsAction) => {
@@ -36,8 +39,8 @@ const applicationModalReducer = (state: ApplicationModalsState , action: Applica
     return {...state, showAddModal: action.payload.showAddModal};
   } else if(action.type === "EDIT") {
     return {...state, showEditModal: action.payload.showEditModal};
-  } else if(action.type === "DELETE") {
-    return {...state, showDeleteModal: action.payload.showDeleteModal};
+  } else if(action.type === "DETAILS") {
+    return {...state, showDetailsModal: action.payload.showDetailsModal};
   }
   return {...state};
 }
@@ -96,7 +99,9 @@ const JobApplicationList = () => {
                 {!loading.isLoading && !loading.isLoaded && <li className="job-applications__list__status-message">Error occured while loading applications.</li>}
                 {!loading.isLoading && loading.isLoaded && applications.length && applications.map(application => <JobApplicationCard key={application.id} application={application} />)}
             </ul>
+            <ApplicationsContext.Provider value={{applications, setApplications}}>
             {state.showAddModal && <Modal closeModal={() => dispatch({type: ApplicationModalsType.ADD, payload: {...state, showAddModal: false}})} ModalContent={AddApplicationForm} />}
+            </ApplicationsContext.Provider>
         </div>
     );
 };
