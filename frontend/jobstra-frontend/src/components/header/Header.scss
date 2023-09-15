@@ -21,23 +21,23 @@
     &__user-info {
         margin-left: auto;
         font-family: $montserrat;
+        &__btn--login,
+        &__btn--signup {
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
         &__btn--login {
             @include button-default;
-            font-weight: bold;
-            color: $blue-dark;
+            @include button-primary($blue-dark, $orange, $orange-light);
+            border: 2px solid transparent;
             margin-right: 24px;
-            padding: 6px 8px;
-            border: 2px solid $blue-dark;
-            border-radius: 4px;
         }
 
         &__btn--signup {
             @include button-default;
-            background-color: $blue-dark;
-            font-weight: bold;
-            color: $orange;
-            border-radius: 4px;
-            padding: 8px 12px;
+            @include button-secondary($blue-dark, $orange-light);
+
         }
     }
 }

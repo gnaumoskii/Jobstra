@@ -4,3 +4,25 @@
     outline: none;
     background-color: transparent;
 }
+
+@mixin button-primary($backgroundColor, $color, $colorHover) {
+    background-color: $backgroundColor;
+    color: $color;
+    transition: 0.2s ease-out;
+    &:hover {
+        color: $colorHover;
+    }
+}
+
+@mixin button-secondary($color, $colorHover) {
+    border: 2px solid $color;
+    color: $color;
+    transition: 0.2s ease-out;
+    background-image: linear-gradient(to right, transparent 50%, $color 50%);
+    background-size: 200%;
+    
+    &:hover {
+        background-position: -100%;
+        color: $colorHover;
+    }
+}

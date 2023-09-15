@@ -2,6 +2,7 @@ import "./App.scss";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import RootLayout from "./pages/layouts/RootLayout";
+import JobApplicationDetails from "./components/job-application-details/JobApplicationDetails";
 
 function App() {
     const router = createBrowserRouter([
@@ -13,6 +14,11 @@ function App() {
               {
                 index: true,
                 element: <HomePage />,
+
+              },
+              {
+                path: "applications/:id",
+                element: <JobApplicationDetails />,
               },
               {
                 path: "interviews",

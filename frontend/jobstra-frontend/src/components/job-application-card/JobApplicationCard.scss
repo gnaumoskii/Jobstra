@@ -63,26 +63,4 @@
         overflow: hidden;
         word-break:keep-all;
     }
-            /* width */
-            ::-webkit-scrollbar {
-                width: 4px;
-            }
-            
-
-            ::-webkit-scrollbar-track {
-                margin-top: 10px;
-
-
-            }
-
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-                background: $blue-dark; 
-                border-radius: 10px;
-            }
-            
-            /* Handle on hover */
-            ::-webkit-scrollbar-thumb:hover {
-                background: #b30000; 
-            }
 }

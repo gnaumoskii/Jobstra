@@ -1,4 +1,4 @@
-.form-add {
+.application-form {
     font-family: $montserrat;
     padding: 16px;
     width: 400px;
@@ -30,14 +30,44 @@
             outline: none;
             padding: 4px;
             font-weight: 500;
-
         }
 
         & textarea {
             max-width: 100%;
-            max-height: 200px;
-         
+            min-width: 100%;
+            max-height: 240px;
+            min-height:150px;
+            
+                    /* width */
+            
+
         }
+        ::-webkit-scrollbar {
+            width: 6px;
+            
+        }
+        
+
+
+        ::-webkit-scrollbar-track {
+            margin-top: 10px;
+            
+
+        }
+
+
+
+        ::-webkit-scrollbar-corner {
+            background-color: transparent;
+           
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $purple;    
+            border-radius: 10px;
+        }
+
     }
 
     &__validation-message {
@@ -52,7 +82,7 @@
         justify-content: end;
         padding-top: 16px;
         margin-bottom: 12px;
-        &__btn-add,
+        &__btn-submit,
         &__btn-cancel {
             @include button-default;
             margin: 8px;
@@ -61,29 +91,16 @@
             font-weight: 600;
         }
 
-        &__btn-add {
-            background-color: $purple;
-            color: $orange;
-            transition: 0.2s ease-out;
-
-            &:hover {
-                
-                color: $orange-light;
-            }
+        &__btn-submit {
+            @include button-primary($purple, $orange, $orange-light);
         }
         
         &__btn-cancel {
-            border: 2px solid $purple;
-            color: $purple;
-            transition: 0.2s ease-out;
-            background-image: linear-gradient(to right, $orange 50%, $purple 50%);
-            background-size: 200%;
-            
-            &:hover {
-                border: 2px solid $blue-dark;
-                background-position: -100%;
-                color: $orange-light;
-            }
+            @include button-secondary($purple, $orange-light);
+
         }
     }
+
+
+
 }

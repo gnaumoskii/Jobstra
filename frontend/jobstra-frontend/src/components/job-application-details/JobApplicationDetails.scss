@@ -1,0 +1,97 @@
+.ja-details {
+    @mixin ja-details__label {
+        color: $orange;
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    @mixin ja-details__data {
+        color: $orange-light;
+        font-weight: bold;
+        font-size: 24px;
+    }
+    padding: 48px;
+    font-family: $montserrat;
+
+    &__status-message {
+        color: $orange;
+        font-size: 20px;
+        font-weight: 500;
+        position: relative;
+        width: 100%;
+    }
+
+    &__header {
+        display: flex;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid $orange;
+        width: 650px;
+        align-items: center;
+        justify-content: space-between;
+        &__title {
+            color: $orange;
+            font-size: 36px;
+            letter-spacing: 1px;
+        }
+
+        &-buttons {
+            &__btn--edit,
+            &__btn--delete {
+                padding: 8px 12px;
+                border-radius: 4px;
+                font-weight: bold;
+            }
+            &__btn--edit {
+                @include button-default;
+                @include button-primary($orange, $purple, $blue-dark);
+                border: 2px solid transparent;
+                margin-right: 16px;
+            }
+            &__btn--delete {
+                @include button-default;
+                @include button-secondary($orange, $blue-dark);
+            }
+        }
+    }
+
+    &__container {
+        display: flex;
+        margin: 24px 0;
+    }
+
+    &__container-info {
+
+        &:first-child {
+            margin-right: 64px;
+        }
+        &__job-position--label {
+            @include ja-details__label;
+        }
+
+        &__job-position {
+            @include ja-details__data;
+        }
+
+        &__date-created--label {
+            @include ja-details__label;
+        }
+
+        &__date-created {
+            @include ja-details__data;
+        }
+
+        &__interview-description--label {
+            @include ja-details__label;
+            display: inline;
+            font-size: 16px;
+            margin-bottom: 24px;
+            
+        }
+        &__interview-description {
+            color: $orange-light;
+        }
+
+        
+    }
+}

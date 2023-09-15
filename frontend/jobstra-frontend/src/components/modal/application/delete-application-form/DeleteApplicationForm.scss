@@ -1,0 +1,44 @@
+.ja-delete {
+    padding: 32px 0;
+    text-align: center;
+    max-width: 600px;
+    &__title {
+        color: $purple;
+        font-size: 20px;
+        margin-bottom: 16px;
+        &__company-name {
+            color: $blue-dark;
+            display: inline-block;
+            width: 100%;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 24px;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+
+
+        
+        &__btn-submit,
+        &__btn-cancel {
+            @include button-default;
+            margin: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        &__btn-submit {
+            @include button-primary($purple, $orange, $orange-light);
+        }
+        
+        &__btn-cancel {
+            @include button-secondary($purple, $orange-light);
+
+        }
+    }
+}
