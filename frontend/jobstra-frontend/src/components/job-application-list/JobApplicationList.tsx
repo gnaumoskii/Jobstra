@@ -46,9 +46,9 @@ const JobApplicationList = () => {
             </div>
             <ul className="job-applications__list">
                 {loading && !hasError && <li className="job-applications__list__status-message">Loading applications...</li>}
-                {!loading && hasError && <li className="job-applications__list__status-message">Error occured while loading applications.</li>}
+                {!loading && hasError && <li className="job-applications__list__status-message">Error occurred while loading applications.</li>}
                 {!loading && !hasError && !applications.length && <li className="job-applications__list__status-message">No applications to show.</li>}
-                {!loading && !hasError && applications.length && applications.map(application => <JobApplicationCard key={application.id} application={application} />)}
+                {!loading && !hasError && applications.length && applications.map((application, index) => <JobApplicationCard animationDelay={index} key={application.id} application={application} />)}
             </ul>
             <ApplicationsContext.Provider value={{setApplications}}>
             {showAddModal && <Modal closeModal={() => setShowAddModal(false)} ModalContent={AddApplicationForm} />}

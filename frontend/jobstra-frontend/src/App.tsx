@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import RootLayout from "./pages/layouts/RootLayout";
 import JobApplicationDetails from "./components/job-application-details/JobApplicationDetails";
+import About from "./pages/about/About";
 
 function App() {
     const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
               {
                 path: "interviews",
                 element: <HomePage />,
+              },
+              {
+                path: "about",
+                element: <About />,
               }
             ],
         },

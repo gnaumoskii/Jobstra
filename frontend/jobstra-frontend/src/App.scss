@@ -1,6 +1,7 @@
 @import "./theme/reset";
 @import "./theme/variables";
 @import "./theme/mixins";
+@import "./theme/animations";
 
 @import "./components/header/Header.scss";
 @import "./components/navbar/Navbar.scss";
@@ -12,6 +13,7 @@
 @import "./components/job-application-details/JobApplicationDetails.scss";
 
 @import "./pages/home/HomePage.scss";
+@import "./pages/about/About.scss";
 
 body {
     background-color: $blue-dark;

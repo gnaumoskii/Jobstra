@@ -42,7 +42,7 @@ const JobApplicationDetails = () => {
     return (
         <div className="ja-details">
             {loading && <div className="ja-details__status-message"> Loading application...</div>}
-            {!loading && hasError && <div className="ja-details__status-message">Error occured while loading the application.</div>}
+            {!loading && hasError && <div className="ja-details__status-message">Error occurred while loading the application.</div>}
             {!loading && !hasError && (
                 <>
                     <div className="ja-details__header">
@@ -76,9 +76,8 @@ const JobApplicationDetails = () => {
             )}
             <ApplicationDetailsContext.Provider value={{ setApplication, application }}>
                 {showEditModal && <Modal ModalContent={EditApplicationForm} closeModal={() => setShowEditModal(false)} />}
-                {showDeleteModal && <Modal ModalContent={DeleteApplicationForm} closeModal={() => setShowDeleteModal(false)} />}
             </ApplicationDetailsContext.Provider>
-
+            {showDeleteModal && <Modal ModalContent={DeleteApplicationForm} closeModal={() => setShowDeleteModal(false)} />}
             
         </div>
     );

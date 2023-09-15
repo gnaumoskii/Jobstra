@@ -12,7 +12,7 @@
     }
     padding: 48px;
     font-family: $montserrat;
-
+    animation: fade-in-from-left 0.25s ease-out;
     &__status-message {
         color: $orange;
         font-size: 20px;

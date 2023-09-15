@@ -4,14 +4,15 @@ import { dateFormat } from "../../services/dateFormat";
 
 interface JobApplicationProps {
   application: Application;
+  animationDelay: number;
 }
 
-const JobApplicationCard: React.FC<JobApplicationProps> = ({application}) => {
+const JobApplicationCard: React.FC<JobApplicationProps> = ({application, animationDelay}) => {
   const navigate = useNavigate();
   const applicationDate = dateFormat(new Date(application.createdAt));
 
   return (
-    <li className="job-application" onClick={() => navigate(`/applications/${application.id}`)}>
+    <li className="job-application" style={{animationDelay: (animationDelay * 37).toString() + "ms"}} onClick={() => navigate(`/applications/${application.id}`)}>
         <h1 className="job-application__company-name">{application.companyName}</h1>
         <p className="job-application__job-position--label">Job Position</p>
         <p className="job-application__job-position">{application.jobPosition}</p>

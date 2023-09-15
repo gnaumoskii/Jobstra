@@ -1,0 +1,13 @@
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: $blue-dark2;
+}
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $orange;    
+}
