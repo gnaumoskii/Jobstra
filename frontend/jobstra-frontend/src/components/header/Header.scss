@@ -1,0 +1,43 @@
+.header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: $orange;
+    box-shadow: 0 0 12px black;
+    &__logo-container {
+        max-width: 64px;
+        max-height: 64px;
+        &__img {
+            width: 64px;
+            height: 64px;
+        }
+    }
+
+    &__navbar {
+        margin-left: 98px;
+    }
+
+    &__user-info {
+        margin-left: auto;
+        font-family: $montserrat;
+        &__btn--login,
+        &__btn--signup {
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        &__btn--login {
+            @include button-default;
+            @include button-primary($blue-dark, $orange, $orange-light);
+            border: 2px solid transparent;
+            margin-right: 24px;
+        }
+
+        &__btn--signup {
+            @include button-default;
+            @include button-secondary($blue-dark, $orange-light);
+
+        }
+    }
+}

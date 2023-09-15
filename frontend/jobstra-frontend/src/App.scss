@@ -1,2 +1,20 @@
 @import "./theme/reset";
+@import "./theme/variables";
+@import "./theme/mixins";
+@import "./theme/animations";
 
+@import "./components/header/Header.scss";
+@import "./components/navbar/Navbar.scss";
+@import "./components/job-application-card/JobApplicationCard.scss";
+@import "./components/job-application-list/JobApplicationList.scss";
+@import "./components/modal/Modal.scss";
+@import "./components/modal/application/add-application-form/AddApplicationForm.scss";
+@import "./components/modal/application/delete-application-form/DeleteApplicationForm.scss";
+@import "./components/job-application-details/JobApplicationDetails.scss";
+
+@import "./pages/home/HomePage.scss";
+@import "./pages/about/About.scss";
+
+body {
+    background-color: $blue-dark;
+}

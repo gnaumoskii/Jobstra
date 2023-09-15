@@ -1,0 +1,100 @@
+.job-applications {
+    margin-top: 24px;
+    padding: 24px;
+
+    &__options {
+        border-bottom: 1px solid $orange;
+        font-family: $montserrat;
+        padding-bottom: 24px;
+        margin: 12px;
+        display: flex;
+        align-items: end;
+        &__search-container {
+            display: flex;
+            flex-direction: column;
+            
+            
+            &__label {
+                letter-spacing: 2px;
+                color: $blue-dark;
+                font-weight: 400;
+                width: 92px;
+                text-align: center;
+                background-color: $orange;
+                font-style: italic;
+                margin-bottom: 2px;
+                clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+                display: none;
+            }
+    
+            &__input {
+                margin-top: 4px;
+                background-color: transparent;
+                outline: none;
+                border: 2px solid $orange;
+                border-radius: 4px;
+                padding: 8px;
+                width: 300px;
+                
+                color: $orange;
+                background-color: $blue-dark;
+                font-weight: 500;
+                box-shadow: 4px 4px $blue-dark2;
+                transition: 0.2s ease-out;
+                &::placeholder {
+                    color: $orange;
+                    font-weight: 500;
+                    transition: 0.2s ease-out;
+                }
+
+                &:hover {
+                    box-shadow: 6px 6px $blue-dark2;
+                    border: 2px solid $orange-light;
+                    color: $orange-light;
+                    &::placeholder {
+                        color: $orange-light;
+                    }
+                }
+            }
+        }
+
+        &__add-button {
+            @include button-default;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border: 2px solid $orange;
+            margin-left: 24px;
+            border-radius: 4px;
+            background-color: $orange;
+            color: $blue-dark;
+            font-weight: bold;
+            box-shadow: 4px 4px $blue-dark2;
+
+            transition: 0.2s ease-out;
+            &:hover {
+                background-color: $orange-light;
+                box-shadow: 6px 6px $blue-dark2;
+                border: 2px solid $orange-light;
+            }
+        }
+    }
+
+    &__list {
+        display: flex;
+        position: relative;
+        flex-wrap: wrap;
+        padding: 0;
+        list-style: none;
+        font-family: $montserrat;
+        &__status-message {
+            color: $orange;
+            font-size: 20px;
+            font-weight: 500;
+            position: relative;
+            margin-top: 164px;
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+}
