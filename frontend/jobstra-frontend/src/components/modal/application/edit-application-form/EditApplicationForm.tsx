@@ -61,7 +61,7 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
           return;
         }
 
-        const data: Application | ErrorResponse = await editApplication(id, application);
+        const data: Application | undefined = await editApplication(id, application);
 
           if(!data) {
             setValidation({hasError: true, message: "An error occurred while updating the application."});
