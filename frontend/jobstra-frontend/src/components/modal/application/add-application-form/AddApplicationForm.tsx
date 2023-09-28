@@ -14,7 +14,7 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
   const [validation, setValidation] = useState<Validation>({hasError: false});
   const companyNameRef = useRef<HTMLInputElement>(null);
   const jobPositionRef = useRef<HTMLInputElement>(null);
-  const createdAtRef = useRef<HTMLInputElement>(null);
+  const applicationDateRef = useRef<HTMLInputElement>(null);
   const interviewDescriptionRef= useRef<HTMLTextAreaElement>(null);
   const { setApplications } = useContext(ApplicationsContext);
 
@@ -45,16 +45,16 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
 
   const onSubmitHandler = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const companyName = companyNameRef.current?.value;
-    const jobPosition = jobPositionRef.current?.value;
-    const interviewDescription = interviewDescriptionRef.current?.value;
-    const createdAt = new Date(createdAtRef.current?.value ?? new Date()) ;
-    
+    const companyName = companyNameRef.current?.value as string;
+    const jobPosition = jobPositionRef.current?.value as string;
+    const interviewDescription = interviewDescriptionRef.current?.value as string;
+    const applicationDate = new Date(applicationDateRef.current?.value as string).toISOString();
+
     const application = {
-      company_name: companyName,
-      job_position: jobPosition,
-      created_at: createdAt,
-      interview_description: interviewDescription
+      companyName,
+      jobPosition,
+      applicationDate,
+      interviewDescription
     }
     try {
       if(!validateForm()) {
@@ -88,7 +88,7 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
       </div>
       <div className="application-form__input-container">
         <label className="application-form__input-container__label" htmlFor="created-at">Date of Application</label>
-        <input className="application-form__input-container__input" type="date" id="created-at" defaultValue={new Date().toISOString().split('T')[0]} name="created-at" ref={createdAtRef} onChange={validationOnChangeHandler}/>
+        <input className="application-form__input-container__input" type="date" id="created-at" defaultValue={new Date().toISOString().split('T')[0]} name="created-at" ref={applicationDateRef} onChange={validationOnChangeHandler}/>
       </div>
       <div className="application-form__input-container">
         <label className="application-form__input-container__label" htmlFor="interview-description">Interview Description</label>

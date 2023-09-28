@@ -9,7 +9,7 @@ interface JobApplicationProps {
 
 const JobApplicationCard: React.FC<JobApplicationProps> = ({application, animationDelay}) => {
   const navigate = useNavigate();
-  const applicationDate = dateFormat(new Date(application.createdAt));
+  const applicationDate = dateFormat(new Date(application.applicationDate));
 
   return (
     <li className="job-application" style={{animationDelay: (animationDelay * 37).toString() + "ms"}} onClick={() => navigate(`/applications/${application.id}`)}>
