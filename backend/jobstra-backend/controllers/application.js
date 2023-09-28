@@ -1,46 +1,54 @@
 import Application from "../models/application.js";
 
-export const getAllApplications = async (req,res) => {
-    const applications = await Application.findAll();
-    res.json(applications);
-}
+const applicationResponseData = (application) => {
+    return {
+        id: application.id,
+        companyName: application.companyName,
+        jobPosition: application.jobPosition,
+        interviewDescription: application.interviewDescription,
+        applicationDate: application.applicationDate,
+    };
+};
 
-export const getApplication = async (req,res) => {
+export const getAllApplications = async (req, res) => {
+    const applications = await Application.findAll();
+    res.json(applications.map(application => applicationResponseData(application)));
+};
+
+export const getApplication = async (req, res) => {
     try {
         const id = req.params.id;
         const application = await Application.findByPk(id);
-        res.json(application);
+        console.log(applicationResponseData(application));
+        res.json(applicationResponseData(application));
     } catch (error) {
         console.log(error);
     }
-}
+};
 
-export const createApplication = async (req,res) => {
-    const {companyName, jobPosition, interviewDescription} = req.body;
-    const applications = await Application.create({
-        companyName,
-        jobPosition,
-        interviewDescription
-    });
-    res.json(applications);
-}
+export const createApplication = async (req, res) => {
+    const applicationData = req.body;
+    const createdApplication = await Application.create(applicationData);
+    res.json(createdApplication);
+};
 
-export const editApplication = async (req,res) => {
+export const editApplication = async (req, res) => {
     const id = req.params.id;
     const applicationBody = req.body;
-    await Application.update(applicationBody, {where: { id }})
+    console.log(applicationBody);
+    await Application.update(applicationBody, { where: { id } });
     res.json({
         success: true,
         message: "Application successfully updated.",
-        updatedData: applicationBody
+        updatedData: applicationBody,
     });
-}
+};
 
-export const deleteApplication = async (req,res) => {
+export const deleteApplication = async (req, res) => {
     const id = req.params.id;
-    const rowsDeleted = await Application.destroy({where: {id}});
+    const rowsDeleted = await Application.destroy({ where: { id } });
 
-    if(rowsDeleted) {
+    if (rowsDeleted) {
         res.json({
             success: true,
             message: "Application deleted.",
@@ -51,5 +59,4 @@ export const deleteApplication = async (req,res) => {
             message: "No application is deleted.",
         });
     }
-
-}
+};

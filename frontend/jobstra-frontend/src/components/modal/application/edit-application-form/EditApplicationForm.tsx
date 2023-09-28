@@ -48,13 +48,13 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
       const companyName = companyNameRef.current?.value;
       const jobPosition = jobPositionRef.current?.value;
       const interviewDescription = interviewDescriptionRef.current?.value;
-      const createdAt = new Date(createdAtRef.current?.value ?? new Date()) ;
+      const applicationDate = new Date(createdAtRef.current?.value as string).toISOString() ;
       
       const application = {
-        company_name: companyName,
-        job_position: jobPosition,
-        created_at: createdAt,
-        interview_description: interviewDescription
+        companyName,
+        jobPosition,
+        applicationDate,
+        interviewDescription
       }
       try {
         if(!validateForm() || !id) {
@@ -89,7 +89,7 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
     </div>
     <div className="application-form__input-container">
       <label className="application-form__input-container__label" htmlFor="created-at">Date of Application</label>
-      <input className="application-form__input-container__input" type="date" id="created-at" ref={createdAtRef} defaultValue={new Date(application.createdAt).toISOString().split('T')[0]} name="created-at" onChange={validationOnChangeHandler}/>
+      <input className="application-form__input-container__input" type="date" id="created-at" ref={createdAtRef} defaultValue={new Date(application.applicationDate).toISOString().split('T')[0]} name="created-at" onChange={validationOnChangeHandler}/>
     </div>
     <div className="application-form__input-container">
       <label className="application-form__input-container__label" htmlFor="interview-description">Interview Description</label>

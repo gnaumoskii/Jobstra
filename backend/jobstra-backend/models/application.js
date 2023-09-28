@@ -19,7 +19,11 @@ const Application = sequelizeDB.define("application", {
     interviewDescription: {
         type: Sequelize.TEXT,
         allowNull: true,
-    }
+    },
+    applicationDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+    },
 });
 
 export default Application;

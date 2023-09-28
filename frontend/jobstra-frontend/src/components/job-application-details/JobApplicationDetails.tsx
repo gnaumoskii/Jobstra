@@ -12,7 +12,7 @@ const emptyApplicationPlaceholder: Application = {
     id: "", 
     companyName: "", 
     jobPosition: "", 
-    createdAt: new Date(), 
+    applicationDate: "", 
     interviewDescription: "" 
 };
 
@@ -24,7 +24,7 @@ const JobApplicationDetails = () => {
     const { loading, setLoading, hasError, setHasError } = useLoading();
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const applicationDate = dateFormat(new Date(application.createdAt));
+    const applicationDate = dateFormat(new Date(application.applicationDate));
     useEffect(() => {
         const getApplication = async (id: string): Promise<void> => {
             setLoading(true);

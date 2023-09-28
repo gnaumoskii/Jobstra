@@ -1,5 +1,4 @@
-import { transformSnakeToCamelObj } from "../snakeToCamel";
-import { Application, ApplicationRawData } from "../../interfaces/Application";
+import { Application } from "../../interfaces/Application";
 
 export const fetchApplications = async (): Promise<Application[] | undefined> => {
     try {
@@ -7,8 +6,7 @@ export const fetchApplications = async (): Promise<Application[] | undefined> =>
         if (!response.ok) {
             throw new Error("An error occurred while fetching applications.");
         }
-        const data = await response.json();
-        const applications: Application[] = data.map((application: object) => transformSnakeToCamelObj<Application>(application));
+        const applications = await response.json();
         return applications;
     } catch (error) {
         console.log(error);
@@ -21,15 +19,14 @@ export const fetchApplication = async (id: string): Promise<Application | undefi
         if (!response.ok) {
             throw new Error("An error occurred while fetching the application.");
         }
-        const data = await response.json();
-        const application = transformSnakeToCamelObj<Application>(data);
+        const application = await response.json();
         return application;
     } catch (error) {
         console.log(error);
     }
 };
 
-export const createApplication = async (application: Partial<ApplicationRawData>): Promise<Application | undefined> => {
+export const createApplication = async (application: Partial<Application>): Promise<Application | undefined> => {
     try {
         const response = await fetch("http://localhost:3000/applications", {
             method: "POST",
@@ -41,15 +38,15 @@ export const createApplication = async (application: Partial<ApplicationRawData>
         if(!response.ok) {
             throw new Error("An error occurred while creating application.");
         }
-        const data = await response.json();
-        return transformSnakeToCamelObj<Application>(data);
+        const createdApplication = await response.json();
+        return createdApplication;
     } catch (error) {
         console.log(error);
     }
 
 };
 
-export const editApplication = async (id: string, application: Partial<ApplicationRawData>): Promise<Application | undefined> => {
+export const editApplication = async (id: string, application: Partial<Application>): Promise<Application | undefined> => {
     try {
         const response = await fetch(`http://localhost:3000/applications/${id}`, {
             method: "PATCH",
@@ -60,7 +57,8 @@ export const editApplication = async (id: string, application: Partial<Applicati
             throw new Error("An error occurred while creating application.");
         }
         const data = await response.json();
-        return transformSnakeToCamelObj<Application>(data);
+        console.log(data);
+        return data.updatedData;
     } catch (error) {
         console.log(error);
     }

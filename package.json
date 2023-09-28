@@ -1,0 +1,10 @@
+{
+    "name": "jobstra",
+    "version": "1.0.0",
+    "description": "Jobstra is an application for tracking job applications.",
+    "scripts": {
+      "start-backend": "cd ./backend/jobstra-backend && npm run start",
+      "start-frontend": "cd ./frontend/jobstra-frontend && npm run dev",
+      "start": "npm run start-backend | npm run start-frontend"
+    }
+}
