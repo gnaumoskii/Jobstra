@@ -1,8 +1,8 @@
 import express from "express";
-import { createApplication, deleteApplication, editApplication, getAllApplications, getApplication } from "../controllers/application.js";
+import { createApplication, deleteApplication, editApplication, getApplications, getApplication } from "../controllers/application.js";
 const router = express.Router();
 
-router.get("/", getAllApplications);
+router.get("/", getApplications);
 router.get("/:id", getApplication);
 router.post("/", createApplication);
 router.patch("/:id", editApplication);

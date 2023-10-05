@@ -47,13 +47,18 @@
                     transition: 0.2s ease-out;
                 }
 
-                &:hover {
+                &:not(:disabled):hover {
                     box-shadow: 6px 6px $blue-dark2;
                     border: 2px solid $orange-light;
                     color: $orange-light;
                     &::placeholder {
                         color: $orange-light;
                     }
+                }
+
+                &:disabled {
+                    color: $burgundy;
+                    border: 2px solid $burgundy;
                 }
             }
         }
@@ -75,6 +80,11 @@
                 background-color: $orange-light;
                 box-shadow: 6px 6px $blue-dark2;
                 border: 2px solid $orange-light;
+            }
+
+            &:disabled {
+                background-color: $burgundy;
+                border: 2px solid $burgundy;
             }
         }
     }

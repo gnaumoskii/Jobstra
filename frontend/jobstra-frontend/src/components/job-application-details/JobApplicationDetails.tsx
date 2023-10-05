@@ -7,6 +7,8 @@ import Modal from "../modal/Modal";
 import EditApplicationForm from "../modal/application/edit-application-form/EditApplicationForm";
 import useLoading from "../../hooks/useLoading";
 import { DeleteApplicationForm } from "../modal/application/delete-application-form/DeleteApplicationForm";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const emptyApplicationPlaceholder: Application = { 
     id: "", 
@@ -25,6 +27,7 @@ const JobApplicationDetails = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const applicationDate = dateFormat(new Date(application.applicationDate));
+    const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
     useEffect(() => {
         const getApplication = async (id: string): Promise<void> => {
             setLoading(true);
@@ -34,11 +37,12 @@ const JobApplicationDetails = () => {
                 setHasError(true);
                 return;
             }
+            setHasError(false);
             setApplication(applicationData);
             setLoading(false);
         };
         getApplication(id as string);
-    }, [id, setHasError, setLoading]);
+    }, [id, setHasError, setLoading, isAuthorized]);
     return (
         <div className="ja-details">
             {loading && <div className="ja-details__status-message"> Loading application...</div>}

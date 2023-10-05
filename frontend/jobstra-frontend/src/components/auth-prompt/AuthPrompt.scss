@@ -1,0 +1,21 @@
+.auth-prompt {
+    font-family: $montserrat;
+    &__message {
+        
+        &__login-button {
+            text-decoration: none;
+            background: linear-gradient(to right, $orange 50%, $blue-dark 50%);
+            background-size: 200%;
+            color: $blue-dark;
+            padding: 6px 8px;
+            font-weight: 600;
+            transition: background 0.3s ease-out, color 0.4s ease-out;
+            border-radius: 4px;
+            &:hover {
+                cursor: pointer;
+                background-position-x: -100%;
+                color: $orange-light;
+            }
+        }
+    }
+}

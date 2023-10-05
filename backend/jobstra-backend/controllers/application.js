@@ -10,25 +10,33 @@ const applicationResponseData = (application) => {
     };
 };
 
-export const getAllApplications = async (req, res) => {
-    const applications = await Application.findAll();
+export const getApplications = async (req, res) => {
+    const applications = await req.user.getApplications();
     res.json(applications.map(application => applicationResponseData(application)));
 };
 
 export const getApplication = async (req, res) => {
     try {
         const id = req.params.id;
-        const application = await Application.findByPk(id);
-        console.log(applicationResponseData(application));
-        res.json(applicationResponseData(application));
+        const [application] = await req.user.getApplications({where: {id}});
+        if(application) {
+            res.json(applicationResponseData(application));
+        } else {
+            res.status(404);
+            res.end();
+        }
+
     } catch (error) {
         console.log(error);
     }
 };
 
 export const createApplication = async (req, res) => {
+    console.log("creating....");
     const applicationData = req.body;
-    const createdApplication = await Application.create(applicationData);
+    
+    const createdApplication = await req.user.createApplication(applicationData);
+    
     res.json(createdApplication);
 };
 
