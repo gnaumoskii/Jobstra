@@ -1,5 +1,6 @@
 @mixin button-default {
     cursor: pointer;
+    text-decoration: none;
     border: none;
     outline: none;
     background-color: transparent;

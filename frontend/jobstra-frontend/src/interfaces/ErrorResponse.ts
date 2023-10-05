@@ -1,3 +1,5 @@
 export interface ErrorResponse {
-    message: string;
+    success: boolean,
+    statusCode: number,
+    message?: string,
 }

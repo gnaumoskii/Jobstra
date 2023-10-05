@@ -21,23 +21,80 @@
     &__user-info {
         margin-left: auto;
         font-family: $montserrat;
+        display: flex;
+        align-items: center;
         &__btn--login,
+        &__btn--logout,
         &__btn--signup {
+            
             font-weight: bold;
             padding: 8px 12px;
             border-radius: 4px;
         }
+
+        &__username {
+            color: $blue-dark;
+            margin-right: 32px;
+            font-size: 20px;
+            &-value {
+                font-weight: bold;
+                transition: 0.2s ease-out;
+              
+                position: relative;
+                &::after {
+                    transition: 0.2s ease-out;
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: -2px;
+                    width: 0%;
+                    border-bottom: 2px solid $blue-dark;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                   
+                    &::after {
+                        width: 100%;
+                       
+                    }
+                }
+            }
+
+
+        }
+
+
         &__btn--login {
             @include button-default;
             @include button-primary($blue-dark, $orange, $orange-light);
             border: 2px solid transparent;
             margin-right: 24px;
         }
+        &__btn--logout {
+            @include button-default;
+            @include button-primary($blue-dark, $orange, $orange-light);
+            border: 2px solid transparent;
+            animation: slide-left-to-right 0.5s backwards cubic-bezier(0.33, 1, 0.68, 1);
+        
+        }
 
         &__btn--signup {
             @include button-default;
             @include button-secondary($blue-dark, $orange-light);
 
+        }
+    }
+
+
+    @keyframes slide-left-to-right {
+        0% {
+            transform: translateX(-200%);
+        }
+
+        100% {
+            transform: translateX(0%);
         }
     }
 }

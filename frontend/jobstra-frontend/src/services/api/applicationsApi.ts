@@ -1,21 +1,26 @@
 import { Application } from "../../interfaces/Application";
+import { ErrorResponse } from "../../interfaces/ErrorResponse";
 
-export const fetchApplications = async (): Promise<Application[] | undefined> => {
+export const fetchApplications = async (): Promise<Application[] | ErrorResponse> => {
+    let statusCode = 200;
     try {
-        const response = await fetch("http://localhost:3000/applications");
-        if (!response.ok) {
-            throw new Error("An error occurred while fetching applications.");
-        }
-        const applications = await response.json();
-        return applications;
+            const response = await fetch("http://localhost:3000/applications", {credentials: "include"});
+            if (!response.ok) {
+                statusCode = response.status;
+                throw new Error("An error occured while fetching the applications.")
+            }
+            
+            const applications = await response.json();
+            return applications;
+
     } catch (error) {
-        console.log(error);
+        return {success: false, statusCode, message: "error"}
     }
 };
 
 export const fetchApplication = async (id: string): Promise<Application | undefined> => {
     try {
-        const response = await fetch(`http://localhost:3000/applications/${id}`);
+        const response = await fetch(`http://localhost:3000/applications/${id}`, {credentials: "include"});
         if (!response.ok) {
             throw new Error("An error occurred while fetching the application.");
         }
@@ -30,11 +35,13 @@ export const createApplication = async (application: Partial<Application>): Prom
     try {
         const response = await fetch("http://localhost:3000/applications", {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(application),
         });
+        console.log(await response.json());
         if(!response.ok) {
             throw new Error("An error occurred while creating application.");
         }
@@ -50,6 +57,7 @@ export const editApplication = async (id: string, application: Partial<Applicati
     try {
         const response = await fetch(`http://localhost:3000/applications/${id}`, {
             method: "PATCH",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(application),
         });
@@ -68,7 +76,8 @@ export const editApplication = async (id: string, application: Partial<Applicati
 export const deleteApplication = async (id: string): Promise<void> => {
     try {
         const response = await fetch(`http://localhost:3000/applications/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials: "include"
         });
         if(!response.ok) {
             throw new Error("An error occurred while deleting application.")
