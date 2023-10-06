@@ -57,18 +57,22 @@
                 }
 
                 &:disabled {
-                    color: $burgundy;
+                    &::placeholder {
+                        color: $burgundy;
+                    }
                     border: 2px solid $burgundy;
+           
                 }
             }
         }
 
-        &__add-button {
+        &__btn-add {
             @include button-default;
+            font-family: $montserrat;
             text-transform: uppercase;
             padding: 8px 16px;
             border: 2px solid $orange;
-            margin-left: 24px;
+            margin-left: 12px;
             border-radius: 4px;
             background-color: $orange;
             color: $blue-dark;
@@ -76,7 +80,7 @@
             box-shadow: 4px 4px $blue-dark2;
 
             transition: 0.2s ease-out;
-            &:hover {
+            &:not(:disabled):hover {
                 background-color: $orange-light;
                 box-shadow: 6px 6px $blue-dark2;
                 border: 2px solid $orange-light;
@@ -85,6 +89,30 @@
             &:disabled {
                 background-color: $burgundy;
                 border: 2px solid $burgundy;
+                cursor: default;
+            }
+        }
+
+        &__btn-clear {
+            @include button-default;
+            @include button-primary($blue-dark, $orange, $orange-light);
+            text-transform: uppercase;
+            padding: 8px 16px;
+            margin-left: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 2px solid $orange;
+            box-shadow: 4px 4px $blue-dark2;
+
+            &:not(:disabled):hover {
+                border: 2px solid $orange-light;
+                box-shadow: 6px 6px $blue-dark2;
+            }
+
+            &:disabled {
+                color: $burgundy;
+                border: 2px solid $burgundy;
+                cursor: default;
             }
         }
     }
