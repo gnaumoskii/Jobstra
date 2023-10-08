@@ -1,35 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import {validateUsernameHandler, validateEmailHandler, validatePasswordHandler } from "../../services/validation/inputValidation";
 import { createUser } from "../../services/api/userApi";
-import User from "../../interfaces/User";
+import {User} from "../../interfaces/User";
+import { useState } from "react";
+import { isErrorResponse } from "../../interfaces/Response";
 
 const RegisterForm = () => {
     const username = useInput((value) => validateUsernameHandler(value));
     const email = useInput((value) => validateEmailHandler(value));
     const password = useInput((value) => validatePasswordHandler(value));
     const confirmPassword = useInput((value) => validatePasswordHandler(value));
-    
-
-    const submitHandler = async (event: React.SyntheticEvent) => {
-        event.preventDefault();
-        username.setIsTouched(true);
-        email.setIsTouched(true);
-        password.setIsTouched(true);
-        confirmPassword.setIsTouched(true);
-
-        if(!username.isValid || !email.isValid || !password.isValid || !confirmPassword.isValid) {
-            return;
-        }
-
-        const user: Partial<User> = {
-            username: username.value,
-            email: email.value,
-            password: password.value
-        } ;
-        const createdUser = await createUser(user);
-        console.log(createdUser);
-    };
+    const [error, setError] = useState({hasError: false, message: ""});
+    const navigate = useNavigate();
 
     const usernameOnChangeHandler = (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -58,6 +41,33 @@ const RegisterForm = () => {
         confirmPassword.setIsValid(target.value === password.value);
     }
 
+    const submitHandler = async (event: React.SyntheticEvent) => {
+        event.preventDefault();
+        username.setIsTouched(true);
+        email.setIsTouched(true);
+        password.setIsTouched(true);
+        confirmPassword.setIsTouched(true);
+
+        if(!username.isValid || !email.isValid || !password.isValid || !confirmPassword.isValid) {
+            return;
+        }
+
+        const user: Partial<User> = {
+            username: username.value,
+            email: email.value,
+            password: password.value
+        };
+
+
+
+        const response = await createUser(user);
+
+        if(isErrorResponse(response)) {
+            setError({message: response.message, hasError: true})
+        }
+        navigate("/login");
+    };
+
     return (
         <div className="register">
             <form onSubmit={submitHandler} className="register-form">
@@ -76,7 +86,7 @@ const RegisterForm = () => {
                         onChange={usernameOnChangeHandler}
                     />
                     {!username.isValid && username.isTouched && (
-                        <p className="register-form__input-container__error-message">Username must be at least 4 characters.</p>
+                        <p className="register-form__error-message">Username must be at least 4 characters.</p>
                     )}
                 </div>
                 <div className="register-form__input-container">
@@ -92,23 +102,23 @@ const RegisterForm = () => {
                         value={email.value}
                         onChange={emailOnChangeHandler}
                     />
-                    {!email.isValid && email.isTouched && <p className="register-form__input-container__error-message">Invalid email.</p>}
+                    {!email.isValid && email.isTouched && <p className="register-form__error-message">Invalid email.</p>}
                 </div>
                 <div className="register-form__input-container">
                     <label htmlFor="password" className="register-form__label">
                         Password
                     </label>
                     <input className="register-form__input" name="password" id="password" type="password" value={password.value} onChange={passwordOnChangeHandler} />
-                    {!password.isValid && password.isTouched && <p className="register-form__input-container__error-message">Password must be at least 8 characters.</p>}
+                    {!password.isValid && password.isTouched && <p className="register-form__error-message">Password must be at least 8 characters.</p>}
                 </div>
                 <div className="register-form__input-container">
                     <label htmlFor="password2" className="register-form__label">
                         Confirm Password
                     </label>
                     <input className="register-form__input" name="password2" id="password2" type="password" value={confirmPassword.value} onChange={confirmPasswordOnChangeHandler}/>
-                    {!confirmPassword.isValid && confirmPassword.isTouched && <p className="register-form__input-container__error-message">Passwords do not match.</p>}
+                    {!confirmPassword.isValid && confirmPassword.isTouched && <p className="register-form__error-message">Passwords do not match.</p>}
                 </div>
-
+                {error.hasError && error.message && <p className="register-form__error-message--bold">{error.message}</p>}
                 <button className="register-form__btn-submit">Create account</button>
             </form>
             <p className="register__message-register">

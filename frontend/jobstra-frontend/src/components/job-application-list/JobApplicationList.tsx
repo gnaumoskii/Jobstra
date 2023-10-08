@@ -7,9 +7,9 @@ import { fetchApplications } from "../../services/api/applicationsApi";
 import useLoading from "../../hooks/useLoading";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
-import { disauthorize } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import AuthPrompt from "../auth-prompt/AuthPrompt";
+import { isErrorResponse } from "../../interfaces/Response";
 
 export const ApplicationsContext = React.createContext<{setApplications: React.Dispatch<React.SetStateAction<Application[]>>}>({setApplications: () => {}});
 
@@ -17,35 +17,34 @@ const JobApplicationList = () => {
     const [applications, setApplications] = useState<Application[]>([]);
     const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
     const [searchValue, setSearchValue] = useState("");
-    const { loading, setLoading, hasError, setHasError} = useLoading();
+    const { loading, setLoading, error, setError} = useLoading();
     const [showAddModal, setShowAddModal] = useState(false);
     const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
 
+    useEffect(()=> {
+        setFilteredApplications(applications);
+    },[applications]);
 
     useEffect(() => {
         const fetchApplicationsHandler = async () => {
-            
             setLoading(true);
-            const applicationsData = await fetchApplications();
-            if("statusCode" in applicationsData) {
-              setLoading(false);
-              if(applicationsData.statusCode === 401) {
-                  dispatch(disauthorize());
-              } else {
-                  setHasError(true);
-              }
-              return;
+            const data = await fetchApplications();
+            if(isErrorResponse(data)) {
+                setLoading(false);
+                setError({hasError: true, message: data.message});
+                return;
             }
             setLoading(false);
-            setApplications(applicationsData)
-            setFilteredApplications(applicationsData)
+            setError({hasError: false, message: ""});
+            setApplications(data);
+            setFilteredApplications(data);
           }
           
         fetchApplicationsHandler();
-    }, [dispatch, setHasError, setLoading, isAuthorized]);
+    }, [dispatch, setError, setLoading, isAuthorized]);
 
 
     const searchApplicationsHandler = (event: React.SyntheticEvent) => {
@@ -88,11 +87,11 @@ const JobApplicationList = () => {
 
             </div>
             <ul className="job-applications__list">
-                {loading && !hasError && <li className="job-applications__list__status-message">Loading applications...</li>}
-                {!loading && hasError && <li className="job-applications__list__status-message">Error occurred while loading applications.</li>}
-                {!loading && !hasError && isAuthorized && !applications.length && <li className="job-applications__list__status-message">No applications to show.</li>}
-                {!loading && !hasError && !isAuthorized && <li className="job-applications__list__status-message"><AuthPrompt /></li>}
-                {!loading && !hasError && isAuthorized && applications.length > 0 && filteredApplications.map((application, index) => <JobApplicationCard animationDelay={index} key={application.id} application={application} />)}
+                {loading && !error.hasError && <li className="job-applications__list__status-message">Loading applications...</li>}
+                {!loading && error.hasError && isAuthorized && <li className="job-applications__list__status-message">{error.message || "Error occurred while loading applications."}</li>}
+                {!loading && !error.hasError && isAuthorized && !applications.length && <li className="job-applications__list__status-message">No applications to show.</li>}
+                {!loading && !isAuthorized && <li className="job-applications__list__status-message"><AuthPrompt /></li>}
+                {!loading && !error.hasError && isAuthorized && applications.length > 0 && filteredApplications.map((application, index) => <JobApplicationCard animationDelay={index} key={application.id} application={application} />)}
             </ul>
             <ApplicationsContext.Provider value={{setApplications}}>
             {showAddModal && <Modal closeModal={() => setShowAddModal(false)} ModalContent={AddApplicationForm} />}

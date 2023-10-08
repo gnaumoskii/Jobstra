@@ -5,10 +5,10 @@ import { deleteApplication } from '../../../../services/api/applicationsApi';
 export const DeleteApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const deleteApplicationHandler = (event: React.SyntheticEvent) => {
+    const deleteApplicationHandler = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         if(!id) return;
-        deleteApplication(id);
+        await deleteApplication(id);
         navigate("/");
     }
   return (

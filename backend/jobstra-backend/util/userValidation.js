@@ -15,3 +15,22 @@ export const compareHashedPassword = async (providedPassword, hashedPassword) =>
         return match; // 'true' if passwords match, 'false' if they don't
 
 }
+
+
+export const validateUserData = (user) => {
+ return validateUsername(user.username) && validateEmail(user.email) && validatePassword(user.password);
+}
+
+const validateUsername = (username) => {
+        return username.trim().length >= 4;
+}
+
+const validateEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+}
+
+const validatePassword = (password) => {
+        return password.trim().length >= 8;
+}
+
