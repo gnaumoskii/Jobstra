@@ -47,7 +47,7 @@ export const fetchApplication = async (id: string): Promise<Application | ErrorR
     }
 };
 
-export const createApplication = async (application: Partial<Application>): Promise<Application | undefined> => {
+export const createApplication = async (application: Partial<Application>): Promise<Application | ErrorResponse> => {
     try {
         const response = await fetch("http://localhost:3000/applications", {
             method: "POST",
@@ -58,13 +58,16 @@ export const createApplication = async (application: Partial<Application>): Prom
             body: JSON.stringify(application),
         });
         if(!response.ok) {
-
-            throw new Error("An error occurred while creating application.");
+            const errorData = await response.json();
+            throw new Error(errorData.message);
         }
         const createdApplication = await response.json();
         return createdApplication;
     } catch (error) {
-        console.log(error);
+        if(error instanceof Error) {
+            return {message: error.message};
+        }
+        throw new Error("An error occured while fetching the application.");
     }
 
 };
@@ -95,7 +98,7 @@ export const editApplication = async (id: string, application: Partial<Applicati
 
 export const deleteApplication = async (id: string): Promise<void | ErrorResponse> => {
     try {
-        const response = await fetch(`http://localhost:3000/applicationss/${id}`, {
+        const response = await fetch(`http://localhost:3000/applications/${id}`, {
             method: 'DELETE',
             credentials: "include"
         });

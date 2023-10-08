@@ -53,9 +53,9 @@ const JobApplicationList = () => {
         setSearchValue(searchValue);
         setFilteredApplications(
             applications.filter(application => 
-                application.companyName.toLowerCase().includes(searchValue) ||
-                application.jobPosition.toLowerCase().includes(searchValue) ||
-                application.interviewDescription.toLowerCase().includes(searchValue)
+                application.companyName.toLowerCase().includes(searchValue.trim()) ||
+                application.jobPosition.toLowerCase().includes(searchValue.trim()) ||
+                application.interviewDescription.toLowerCase().includes(searchValue.trim())
             ));
         
     }
