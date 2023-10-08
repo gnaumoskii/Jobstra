@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors({
     origin : 'http://localhost:5173',
-    credentials: true, // <= Accept credentials (cookies) sent by the client
+    credentials: true,
 }));
 
 

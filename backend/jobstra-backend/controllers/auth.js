@@ -6,7 +6,6 @@ export const getAccessToken = async (req, res) => {
     if(!refreshToken) {
         return res.status(401).json({message:"Not authorized."})
     }
-    console.log("yo");
     const userTokenData = jwt.decode(refreshToken);
     const accessToken = generateAccessToken(userTokenData);
     res.cookie('access_token', accessToken, {

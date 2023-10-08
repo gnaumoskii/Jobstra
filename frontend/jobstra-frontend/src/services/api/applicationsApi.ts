@@ -69,7 +69,7 @@ export const createApplication = async (application: Partial<Application>): Prom
 
 };
 
-export const editApplication = async (id: string, application: Partial<Application>): Promise<Application | undefined> => {
+export const editApplication = async (id: string, application: Partial<Application>): Promise<Application | ErrorResponse> => {
     try {
         const response = await fetch(`http://localhost:3000/applications/${id}`, {
             method: "PATCH",
@@ -78,30 +78,32 @@ export const editApplication = async (id: string, application: Partial<Applicati
             body: JSON.stringify(application),
         });
         if(!response.ok) {
-            throw new Error("An error occurred while creating application.");
+            const errorData = await response.json();
+            throw new Error(errorData.message);
         }
+
         const data = await response.json();
-        console.log(data);
-        return data.updatedData;
+        return data;
     } catch (error) {
-        console.log(error);
+        if(error instanceof Error) {
+            return {message: error.message};
+        }
+        throw new Error("An error occured while updating the application.");
     }
 
 };
 
-export const deleteApplication = async (id: string): Promise<void> => {
+export const deleteApplication = async (id: string): Promise<void | ErrorResponse> => {
     try {
-        const response = await fetch(`http://localhost:3000/applications/${id}`, {
+        const response = await fetch(`http://localhost:3000/applicationss/${id}`, {
             method: 'DELETE',
             credentials: "include"
         });
         if(!response.ok) {
-            throw new Error("An error occurred while deleting application.")
+            throw new Error();
         }
     } catch (error) {
-        if(error instanceof Error) {
-            console.log(error);
-        }
+        return {message: "An error occurred while deleting application."}
     }
 
 }
