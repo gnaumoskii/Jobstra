@@ -23,6 +23,7 @@
         font-family: $montserrat;
         display: flex;
         align-items: center;
+        
         &__btn--login,
         &__btn--logout,
         &__btn--signup {
@@ -33,14 +34,16 @@
         }
 
         &__username {
+            animation: fade-in 0.6s ease-out;
             color: $blue-dark;
             margin-right: 32px;
             font-size: 20px;
             &-value {
                 font-weight: bold;
                 transition: 0.2s ease-out;
-              
+                
                 position: relative;
+                
                 &::after {
                     transition: 0.2s ease-out;
                     content: "";
@@ -88,13 +91,5 @@
     }
 
 
-    @keyframes slide-left-to-right {
-        0% {
-            transform: translateX(-200%);
-        }
 
-        100% {
-            transform: translateX(0%);
-        }
-    }
 }

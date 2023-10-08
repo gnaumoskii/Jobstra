@@ -3,14 +3,10 @@ import { Application } from '../../../../interfaces/Application';
 import { editApplication } from '../../../../services/api/applicationsApi';
 import { useParams } from 'react-router-dom';
 import { ApplicationDetailsContext } from '../../../job-application-details/JobApplicationDetails';
-interface Validation {
-    hasError: boolean;
-    message?: string;
-}
-
+import { isErrorResponse } from '../../../../interfaces/Response';
 
 const EditApplicationForm: React.FC<{application: Application,closeModal: () => void}> = ({closeModal}) => {
-    const [validation, setValidation] = useState<Validation>({hasError: false});
+    const [error, setError] = useState({hasError: false, message: ""});
     const { id } = useParams();
     const {application, setApplication} = useContext(ApplicationDetailsContext);
     const companyNameRef = useRef<HTMLInputElement>(null);
@@ -22,24 +18,24 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
       const companyName = companyNameRef.current?.value || "";
       const jobPosition = jobPositionRef.current?.value  || "";
       if(companyName.trim().length === 0 && jobPosition.trim().length === 0) {
-        setValidation({hasError: true, message: "Please enter Company Name and Job Position."});
+        setError({hasError: true, message: "Please enter Company Name and Job Position."});
         return false;
       } else if(companyName.trim().length === 0) {
-        setValidation({hasError: true, message: "Please enter Company Name."});
+        setError({hasError: true, message: "Please enter Company Name."});
         return false;
       } else if(jobPosition.trim().length === 0) {
-        setValidation({hasError: true, message: "Please enter Job Position."});
+        setError({hasError: true, message: "Please enter Job Position."});
         return false;
       }
   
-      setValidation({hasError: false});
+      setError({hasError: false, message: ""});
       return true;
     }
   
     // Validates the input fields on change if the form is submitted with errors.
     const validationOnChangeHandler = (event: React.SyntheticEvent): void => {
       event.preventDefault();
-      if(!validation.hasError) return;
+      if(!error.hasError) return;
       validateForm();
     }
   
@@ -56,25 +52,18 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
         applicationDate,
         interviewDescription
       }
-      try {
         if(!validateForm() || !id) {
           return;
         }
 
-        const data: Application | undefined = await editApplication(id, application);
-
-          if(!data) {
-            setValidation({hasError: true, message: "An error occurred while updating the application."});
-            return;
-          }
-          
-        
-
+        const data = await editApplication(id, application);
+        if(isErrorResponse(data)) {
+          setError({hasError: true, message: data.message});
+          return;
+        }
+        console.log(data);
         setApplication(data);
         closeModal();
-      } catch (error) {
-        console.log(error);
-      }
     }
   return (
     <form onSubmit={onSubmitHandler} className="application-form">
@@ -95,7 +84,7 @@ const EditApplicationForm: React.FC<{application: Application,closeModal: () => 
       <label className="application-form__input-container__label" htmlFor="interview-description">Interview Description</label>
       <textarea className="application-form__input-container__input" id="interview-description" name="interview-description" ref={interviewDescriptionRef} defaultValue={application.interviewDescription} />
     </div>
-    <p className="application-form__validation-message">{validation.hasError && validation.message}</p>
+    {error.hasError && <p className="application-form__validation-message">{error.message || "An error occured while updating the application."}</p>}
     <div className="application-form__buttons">
       <button className="application-form__buttons__btn-submit">Submit</button> 
       <button className="application-form__buttons__btn-cancel" type="button" onClick={closeModal}>Cancel</button> 

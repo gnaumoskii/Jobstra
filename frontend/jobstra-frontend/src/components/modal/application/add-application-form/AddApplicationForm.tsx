@@ -18,6 +18,7 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
   const interviewDescriptionRef= useRef<HTMLTextAreaElement>(null);
   const { setApplications } = useContext(ApplicationsContext);
 
+  
   const validateForm = (): boolean => {
     const companyName = companyNameRef.current?.value || "";
     const jobPosition = jobPositionRef.current?.value  || "";
@@ -56,12 +57,11 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
       applicationDate,
       interviewDescription
     }
-    try {
       if(!validateForm()) {
         return;
       }
+
       const data: Application | undefined = await createApplication(application);
-      
       if(!data) {
         setValidation({hasError: true, message: "An error occurred while creating application."});
         return;
@@ -70,9 +70,6 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
         return [...prevState, data]
       });
       closeModal();
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   return (

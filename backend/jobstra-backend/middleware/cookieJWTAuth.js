@@ -16,7 +16,7 @@ export const authenticateToken = async (req,res,next) => {
         next();
     } catch (error) {
         res.clearCookie("access_token");
-        res.status(401).json({message: "Please log in."});
+        res.status(401).json({message: "Not authenticated."});
     }
 }
 

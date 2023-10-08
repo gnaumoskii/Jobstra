@@ -1,12 +1,23 @@
-export const refreshAccessToken = async () => {
+import { AuthResponse, ErrorResponse } from "../../interfaces/Response";
+
+export const refreshAccessToken = async (): Promise<AuthResponse | ErrorResponse> => {
     // Send a request to your server's /refresh-token endpoint
     try {
       const response = await fetch('http://localhost:3000/auth/token', {
         credentials: "include",
       });
+
+      if(!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message)
+      }
+      
       const data = await response.json();
-      return {isAuthorized: data.isAuthorized, username: data.username};
+      return {username: data.username};
     } catch (error) {
-      return {isAuthorized: false};
+      if(error instanceof Error) {
+        return {message: error.message};
+    }
+    return {message: "An error occured."};
     }
   }

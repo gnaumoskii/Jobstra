@@ -11,18 +11,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { authorize, disauthorize } from "./store/authSlice";
 import { refreshAccessToken } from "./services/api/authApi";
 import { RootState } from "./store/store";
+import { isErrorResponse } from "./interfaces/Response";
 
 function App() {
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
   const refreshAccessTokenHandler = useCallback(async () => {
     const refreshedToken = await refreshAccessToken();
-    refreshedToken.isAuthorized ? dispatch(authorize(refreshedToken.username)) : dispatch(disauthorize());
+    if(isErrorResponse(refreshedToken)) {
+      dispatch(disauthorize());
+      return;
+    }
+    dispatch(authorize(refreshedToken.username));
 
   }, [dispatch]);
   useEffect(() => {
     refreshAccessTokenHandler();
-  }, [refreshAccessTokenHandler])
+  }, [isAuthorized, refreshAccessTokenHandler])
 
   useEffect(() => {
 

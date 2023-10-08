@@ -58,3 +58,13 @@
         opacity: 1;
     }
 }
+
+@keyframes slide-left-to-right {
+    0% {
+        transform: translateX(-200%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}

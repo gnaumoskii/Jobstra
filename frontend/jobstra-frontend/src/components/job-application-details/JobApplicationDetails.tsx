@@ -9,6 +9,7 @@ import useLoading from "../../hooks/useLoading";
 import { DeleteApplicationForm } from "../modal/application/delete-application-form/DeleteApplicationForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { isErrorResponse } from "../../interfaces/Response";
 
 const emptyApplicationPlaceholder: Application = { 
     id: "", 
@@ -23,7 +24,7 @@ export const ApplicationDetailsContext = React.createContext<{setApplication: Re
 const JobApplicationDetails = () => {
     const { id } = useParams();
     const [application, setApplication] = useState<Application>(emptyApplicationPlaceholder);
-    const { loading, setLoading, hasError, setHasError } = useLoading();
+    const { loading, setLoading, error, setError } = useLoading();
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const applicationDate = dateFormat(new Date(application.applicationDate));
@@ -31,23 +32,23 @@ const JobApplicationDetails = () => {
     useEffect(() => {
         const getApplication = async (id: string): Promise<void> => {
             setLoading(true);
-            const applicationData = await fetchApplication(id);
-            if (!applicationData) {
+            const data = await fetchApplication(id);
+            if (isErrorResponse(data)) {
                 setLoading(false);
-                setHasError(true);
+                setError({hasError: true, message: data.message});
                 return;
             }
-            setHasError(false);
-            setApplication(applicationData);
+            setError({hasError: false, message: ""});
+            setApplication(data);
             setLoading(false);
         };
         getApplication(id as string);
-    }, [id, setHasError, setLoading, isAuthorized]);
+    }, [id, setError, setLoading, isAuthorized]);
     return (
         <div className="ja-details">
             {loading && <div className="ja-details__status-message"> Loading application...</div>}
-            {!loading && hasError && <div className="ja-details__status-message">Error occurred while loading the application.</div>}
-            {!loading && !hasError && (
+            {!loading && error.hasError && <div className="ja-details__status-message">{error.message || "Error occurred while loading the application."}</div>}
+            {!loading && !error.hasError && (
                 <>
                     <div className="ja-details__header">
                         <h1 className="ja-details__header__title">{application?.companyName}</h1>

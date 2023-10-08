@@ -44,12 +44,19 @@
                 }
             }
 
-            &__error-message {
+        }
+
+        &__error-message {
                 color: $burgundy;
                 font-weight: 500;
                 margin-top: 8px;
-            }
+        }
 
+        &__error-message--bold {
+            color: $purple;
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 8px;
         }
 
         &__message__forgot-password {
