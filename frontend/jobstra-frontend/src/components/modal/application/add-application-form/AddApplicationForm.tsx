@@ -2,6 +2,7 @@ import { useRef, useState, useContext } from "react";
 import { createApplication } from "../../../../services/api/applicationsApi";
 import { ApplicationsContext } from "../../../job-application-list/JobApplicationList";
 import { Application } from "../../../../interfaces/Application";
+import { isErrorResponse } from "../../../../interfaces/Response";
 
 interface Validation {
   hasError: boolean;
@@ -52,22 +53,23 @@ const AddApplicationForm: React.FC<{closeModal: () => void}> = ({closeModal}) =>
     const applicationDate = new Date(applicationDateRef.current?.value as string).toISOString();
 
     const application = {
-      companyName,
-      jobPosition,
+      companyName: companyName.trim(),
+      jobPosition: jobPosition.trim(),
       applicationDate,
-      interviewDescription
+      interviewDescription: interviewDescription.trim()
     }
       if(!validateForm()) {
         return;
       }
 
-      const data: Application | undefined = await createApplication(application);
-      if(!data) {
+      const data = await createApplication(application);
+      if(isErrorResponse(data)) {
         setValidation({hasError: true, message: "An error occurred while creating application."});
         return;
       }
-      setApplications((prevState): Application[] => {
-        return [...prevState, data]
+
+      setApplications((prevApplications): Application[] => {
+        return [...prevApplications, data]
       });
       closeModal();
   }

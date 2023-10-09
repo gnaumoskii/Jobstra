@@ -4,27 +4,22 @@ import { ErrorResponse } from "../../interfaces/Response";
 export const fetchApplications = async (): Promise<Application[] | ErrorResponse> => {
     try {
             const response = await fetch("http://localhost:3000/applications", {credentials: "include"});
-            
-
 
             if (!response.ok) {
                 const errorData: ErrorResponse = await response.json();
                 if(errorData)  {
                     throw new Error(errorData.message);
                 }
-                
             }
-
-
             
             const applications: Application[] = await response.json();
             return applications;
 
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while fetching the applications." : error.message};
         }
-        return {message: "An error occured."}
+        throw new Error("An error occured while fetching the applications.");
     }
 };
 
@@ -41,7 +36,7 @@ export const fetchApplication = async (id: string): Promise<Application | ErrorR
         return application;
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while fetching the application." : error.message};
         }
         throw new Error("An error occured while fetching the application.");
     }
@@ -65,9 +60,9 @@ export const createApplication = async (application: Partial<Application>): Prom
         return createdApplication;
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while creating the application." : error.message};
         }
-        throw new Error("An error occured while fetching the application.");
+        throw new Error("An error occured while creating the application.");
     }
 
 };
@@ -89,7 +84,7 @@ export const editApplication = async (id: string, application: Partial<Applicati
         return data;
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while updating the application." : error.message};
         }
         throw new Error("An error occured while updating the application.");
     }
