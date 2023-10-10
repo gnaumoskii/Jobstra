@@ -66,6 +66,33 @@
             }
         }
 
+        &__sort {
+            appearance: none;
+            background-color: transparent;
+            color: $orange;
+            border: 2px solid $orange;
+            border-radius: 4px;
+            padding: 8px;
+            margin-left: 32px;
+            outline: none;
+            transition: 0.2s ease-out;
+            box-shadow: 4px 4px $blue-dark2;
+            font-weight: bold;
+
+
+
+            &:hover {
+                color: $orange-light;
+                border: 2px solid $orange-light;
+            }
+
+            &-value {
+                border-radius: 4px;
+            }
+
+        }
+
+
         &__btn-add {
             @include button-default;
             font-family: $montserrat;

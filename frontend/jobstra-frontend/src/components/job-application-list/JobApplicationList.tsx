@@ -10,8 +10,11 @@ import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import AuthPrompt from "../auth-prompt/AuthPrompt";
 import { isErrorResponse } from "../../interfaces/Response";
+import { sortApplications } from "../../util/sortApplications";
+import ApplicationSorts from "../../enums/ApplicationSorts";
 
 export const ApplicationsContext = React.createContext<{setApplications: React.Dispatch<React.SetStateAction<Application[]>>}>({setApplications: () => {}});
+
 
 const JobApplicationList = () => {
     const [applications, setApplications] = useState<Application[]>([]);
@@ -22,11 +25,17 @@ const JobApplicationList = () => {
     const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const [sortValue, setSortValue] = useState(1);
 
     useEffect(()=> {
         setFilteredApplications(applications);
+        setSearchValue("");
     },[applications]);
+
+
+    useEffect(()=> {
+        setFilteredApplications(applications => sortApplications(sortValue, applications));
+    },[sortValue]);
 
     useEffect(() => {
         const fetchApplicationsHandler = async () => {
@@ -40,9 +49,8 @@ const JobApplicationList = () => {
             setLoading(false);
             setError({hasError: false, message: ""});
             setApplications(data);
-            setFilteredApplications(data);
           }
-          
+
         fetchApplicationsHandler();
     }, [dispatch, setError, setLoading, isAuthorized]);
 
@@ -51,13 +59,18 @@ const JobApplicationList = () => {
         const target = event.target as HTMLInputElement;
         const searchValue = target.value.toLowerCase();
         setSearchValue(searchValue);
-        setFilteredApplications(
-            applications.filter(application => 
-                application.companyName.toLowerCase().includes(searchValue.trim()) ||
-                application.jobPosition.toLowerCase().includes(searchValue.trim()) ||
-                application.interviewDescription.toLowerCase().includes(searchValue.trim())
-            ));
-        
+        const filteredApps = applications.filter(application => 
+            application.companyName.toLowerCase().includes(searchValue.trim()) ||
+            application.jobPosition.toLowerCase().includes(searchValue.trim()) ||
+            application.interviewDescription.toLowerCase().includes(searchValue.trim())
+        );
+        setFilteredApplications(filteredApps)
+    }
+
+    const sortHandler = (event: React.SyntheticEvent) => {
+        event.preventDefault();
+        const target = event.target as HTMLSelectElement;
+        setSortValue(+target.value);
     }
 
     const clearSearch = () => {
@@ -84,7 +97,14 @@ const JobApplicationList = () => {
                 </div>
                 <button className="job-applications__options__btn-clear" disabled={!isAuthorized} onClick={clearSearch}>Clear</button>
                 <button className="job-applications__options__btn-add" disabled={!isAuthorized} onClick={() => isAuthorized ? setShowAddModal(true) : navigate("/login")}>Add new</button>
-
+                <select onChange={sortHandler} className="job-applications__options__sort" value={sortValue}>
+                <option value={ApplicationSorts.DateCreated_NEW} className="job-applications__options__sort-value">Date Created (New to Old)</option>
+                    <option value={ApplicationSorts.DateCreated_OLD} className="job-applications__options__sort-value">Date Created (Old to New)</option>
+                    <option value={ApplicationSorts.CompanyName_AZ} className="job-applications__options__sort-value">Company Name (A-Z)</option>
+                    <option value={ApplicationSorts.CompanyName_ZA} className="job-applications__options__sort-value">Company Name (Z-A)</option>
+                    <option value={ApplicationSorts.JobPosition_AZ} className="job-applications__options__sort-value">Job Position (A-Z)</option>
+                    <option value={ApplicationSorts.JobPosition_ZA} className="job-applications__options__sort-value">Job Position (Z-A)</option>
+                </select>
             </div>
             <ul className="job-applications__list">
                 {loading && !error.hasError && <li className="job-applications__list__status-message">Loading applications...</li>}

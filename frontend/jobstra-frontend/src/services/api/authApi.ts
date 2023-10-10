@@ -16,8 +16,8 @@ export const refreshAccessToken = async (): Promise<AuthResponse | ErrorResponse
       return {username: data.username};
     } catch (error) {
       if(error instanceof Error) {
-        return {message: error.message};
+        return {message: error.message == "Failed to fetch" ? "An error occured." : error.message};
     }
-    return {message: "An error occured."};
+    throw new Error("An error occured.");
     }
   }

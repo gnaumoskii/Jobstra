@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import { validateEmailHandler, validatePasswordHandler } from "../../services/validation/inputValidation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authorize } from "../../store/authSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../../services/api/userApi";
 import { isErrorResponse } from "../../interfaces/Response";
+import { RootState } from "../../store/store";
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -14,6 +15,16 @@ const LoginForm = () => {
     const email = useInput((value) => validateEmailHandler(value));
     const password = useInput((value) => validatePasswordHandler(value));
     const [auth, setAuth] = useState({hasError: false, message: ""});
+    const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
+
+    useEffect(()=> {
+        if(isAuthorized) {
+            navigate("/");
+        }
+    },[isAuthorized, navigate]);
+
+
+
     const emailOnChangeHandler = (event: React.SyntheticEvent) => {
         event.preventDefault();
         setAuth({hasError: false, message: ""});

@@ -3,8 +3,10 @@ import useInput from "../../hooks/useInput";
 import {validateUsernameHandler, validateEmailHandler, validatePasswordHandler } from "../../services/validation/inputValidation";
 import { createUser } from "../../services/api/userApi";
 import {User} from "../../interfaces/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isErrorResponse } from "../../interfaces/Response";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { RootState } from "../../store/store";
 
 const RegisterForm = () => {
     const username = useInput((value) => validateUsernameHandler(value));
@@ -13,6 +15,14 @@ const RegisterForm = () => {
     const confirmPassword = useInput((value) => validatePasswordHandler(value));
     const [error, setError] = useState({hasError: false, message: ""});
     const navigate = useNavigate();
+    const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
+
+    useEffect(()=> {
+        if(isAuthorized) {
+            navigate("/");
+        }
+    },[isAuthorized, navigate]);
+
 
     const usernameOnChangeHandler = (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -53,9 +63,9 @@ const RegisterForm = () => {
         }
 
         const user: Partial<User> = {
-            username: username.value,
-            email: email.value,
-            password: password.value
+            username: username.value.trim(),
+            email: email.value.trim(),
+            password: password.value.trim()
         };
 
 
@@ -63,7 +73,8 @@ const RegisterForm = () => {
         const response = await createUser(user);
 
         if(isErrorResponse(response)) {
-            setError({message: response.message, hasError: true})
+            setError({message: response.message, hasError: true});
+            return;
         }
         navigate("/login");
     };

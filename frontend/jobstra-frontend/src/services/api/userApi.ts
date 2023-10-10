@@ -14,16 +14,16 @@ export const createUser = async (user: Partial<User>): Promise<User | ErrorRespo
 
         if(!response.ok) {
             const errorData: ErrorResponse = await response.json();
-            throw new Error(errorData.message || "An error occured.");
+            throw new Error(errorData.message);
         }
     
         const createdUser: User = await response.json();
         return createdUser; 
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while creating account." : error.message};
         }
-        return {message: "An error occured."};
+        return {message: "An error occured while creating account."};
     }
 
 }
@@ -40,17 +40,21 @@ export const loginUser = async(userLoginData: UserLogin): Promise<AuthResponse |
           });
 
           if(!response.ok) {
+            console.log("test");
+            
             const errorData: ErrorResponse = await response.json();
-            throw new Error(errorData.message || "An error occured.");
+            
+            
+            throw new Error(errorData.message);
           }
 
           const data = await response.json();
           return data;
     } catch (error) {
         if(error instanceof Error) {
-            return {message: error.message};
+            return {message: error.message == "Failed to fetch" ? "An error occured while logging in." : error.message};
         }
-        return {message: "An error occured."};
+        return {message: "An error occured while logging in."};
     }
 
 }
