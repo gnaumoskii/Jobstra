@@ -10,6 +10,7 @@
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 12px;
+    transition: 0.2s ease-out;
 }
 
 .job-application {
@@ -68,6 +69,7 @@
         padding: 8px 2px 0 2px;
         height: 172px;
         font-weight: bold;
+        transition: 0.2s ease-out;
         display: -webkit-box;
         -webkit-line-clamp: 7;
         -webkit-box-orient: vertical;
