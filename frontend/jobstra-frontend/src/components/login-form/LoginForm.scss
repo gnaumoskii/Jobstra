@@ -10,11 +10,11 @@
         width: 400px;
         margin-top: 64px;
         padding: 48px 32px;
-        background-color: $orange;
+        background-color: $green;
         border-radius: 8px;
         box-shadow: 4px 8px $blue-dark2;
         &__title {
-            color: $blue-dark;
+            color: $slate-gray-dark;
             text-transform: uppercase;
             text-align: center;
         }
@@ -24,17 +24,17 @@
             flex-direction: column;
             margin: 24px 0;
             .login-form__label {
-                color: $blue-dark;
+                color: $slate-gray-dark;
                 font-weight: 500;
                 font-size: 18px;
             }
     
             .login-form__input {
     
-                background-color: $orange-medium-light;
+                background-color: $green-light;
                 border-radius: 4px;
                 border: none;
-                color: $blue-dark;
+                color: $slate-gray-dark;
                 outline: none;
                 padding: 4px;
                 font-weight: 500;
@@ -46,21 +46,14 @@
 
         }
 
-        &__message__forgot-password {
-            color: $blue-dark;
-            font-weight: 400;
-            font-size: 16px;
-            margin: 8px 0;
-        }
-
         &__error-message {
-            color: $burgundy;
+            color: $slate-gray-dark;
             font-weight: 500;
             margin-top: 8px;
         }
 
         &__error-message--bold {
-            color: $purple;
+            color: $slate-gray-dark;
             font-style: italic;
             font-weight: bold;
             margin-top: 8px;
@@ -68,7 +61,7 @@
 
         &__btn-submit {
             @include button-default;
-            @include button-primary($blue-dark, $orange, $orange-light);
+            @include button-primary($slate-gray-dark, $green, $green-light);
             padding: 8px 12px;
             border-radius: 4px;
             text-transform: uppercase;
@@ -82,10 +75,15 @@
         font-weight: 500;
         font-size: 18px;
         margin-top: 16px;
-        color: $orange;
+        color: $slate-gray;
         &--link {
-            color: $orange-light;
+            color: $green;
             text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s ease-out;
+            &:hover {
+                color: $green-light;
+            }
         }
         
     }

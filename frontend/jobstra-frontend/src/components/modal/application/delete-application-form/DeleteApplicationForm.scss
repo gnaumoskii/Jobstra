@@ -32,11 +32,11 @@
         }
 
         &__btn-submit {
-            @include button-primary($purple, $orange, $orange-light);
+            @include button-primary($purple, $green, $green-light);
         }
         
         &__btn-cancel {
-            @include button-secondary($purple, $orange-light);
+            @include button-secondary($purple, $green-light);
 
         }
     }

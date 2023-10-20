@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../../assets/jobstra-logo-blue-dark.png";
+import Logo from "../../assets/jobstra-logo-blue-dark3.png";
 import Navbar from "../navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <div className='header'>
         <div className='header__logo-container'>
-          <img className='header__logo-container__img' src={Logo} />
+          <img className='header__logo-container__img' src={Logo} draggable="false"/>
         </div>
         <div className="header__navbar">
           <Navbar />

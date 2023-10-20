@@ -85,7 +85,6 @@ const LoginForm = () => {
                 </div>
                 {auth.hasError && <p className="login-form__error-message--bold">{auth.message || "An error occured while logging in."}</p>}
                 <button className="login-form__btn-submit">Login</button>
-                <p className="login-form__message__forgot-password">Forgot password ?</p>
             </form>
             <p className="login__message-register">
                 Don't have an account?{" "}
