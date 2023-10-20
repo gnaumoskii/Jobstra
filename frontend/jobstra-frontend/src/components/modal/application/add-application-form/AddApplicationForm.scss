@@ -4,10 +4,10 @@
     width: 400px;
     
     &__title {
-        color: $blue-dark;
+        color: $slate-gray-dark;
         font-size: 24px;
         padding: 12px 0;
-        border-bottom: 1px solid $burgundy;
+        border-bottom: 1px solid $slate-gray-dark;
         margin-bottom: 16px;
     }
 
@@ -16,17 +16,17 @@
         flex-direction: column;
         margin-bottom: 16px;
         &__label {
-            color: $blue-dark;
+            color: $slate-gray-dark;
             font-weight: 500;
             font-size: 18px;
         }
 
         &__input {
 
-            background-color: $orange-medium-light;
+            background-color: $green-light;
             border-radius: 4px;
             border: none;
-            color: $blue-dark;
+            color: $slate-gray-dark;
             outline: none;
             padding: 4px;
             font-weight: 500;
@@ -37,14 +37,9 @@
             min-width: 100%;
             max-height: 240px;
             min-height:150px;
-            
-                    /* width */
-            
-
         }
         ::-webkit-scrollbar {
             width: 6px;
-            
         }
         
 
@@ -52,7 +47,6 @@
         ::-webkit-scrollbar-track {
             margin-top: 10px;
             background-color: transparent;
-
         }
 
 
@@ -64,14 +58,14 @@
 
         /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: $purple;    
+            background: $slate-gray-dark;    
             border-radius: 10px;
         }
 
     }
 
     &__validation-message {
-        color: $blue-dark;
+        color: $slate-gray-dark;
         font-weight: bold;
         font-style: italic;
         
@@ -92,11 +86,11 @@
         }
 
         &__btn-submit {
-            @include button-primary($purple, $orange, $orange-light);
+            @include button-primary($slate-gray-dark, $green, $green-light);
         }
         
         &__btn-cancel {
-            @include button-secondary($purple, $orange-light);
+            @include button-secondary($slate-gray-dark, $green-light);
 
         }
     }

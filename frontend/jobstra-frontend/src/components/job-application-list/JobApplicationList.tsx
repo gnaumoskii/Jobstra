@@ -97,7 +97,7 @@ const JobApplicationList = () => {
                 </div>
                 <button className="job-applications__options__btn-clear" disabled={!isAuthorized} onClick={clearSearch}>Clear</button>
                 <button className="job-applications__options__btn-add" disabled={!isAuthorized} onClick={() => isAuthorized ? setShowAddModal(true) : navigate("/login")}>Add new</button>
-                <select onChange={sortHandler} className="job-applications__options__sort" value={sortValue}>
+                <select onChange={sortHandler} disabled={!isAuthorized} className="job-applications__options__sort" value={sortValue}>
                 <option value={ApplicationSorts.DateCreated_NEW} className="job-applications__options__sort-value">Date Created (New to Old)</option>
                     <option value={ApplicationSorts.DateCreated_OLD} className="job-applications__options__sort-value">Date Created (Old to New)</option>
                     <option value={ApplicationSorts.CompanyName_AZ} className="job-applications__options__sort-value">Company Name (A-Z)</option>

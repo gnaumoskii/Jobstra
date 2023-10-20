@@ -1,21 +1,22 @@
 @mixin application-info-label {
     text-transform: uppercase;
-    color: $blue-dark;
+    color: white;
     letter-spacing: 2px;
     font-size: 14px;
 }
 
 @mixin application-info {
-    color: $blue-dark;
+    color: $green;
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 12px;
 }
 
 .job-application {
-    width: 300px;
+    width: 287px;
     height: 400px;
-    background-color: $orange;
+    background-color: $slate-gray-dark;
+    border: 4px solid $slate-gray-dark;
     border-radius: 8px;
     padding: 12px;
     font-family: $montserrat;
@@ -26,14 +27,23 @@
     animation: pop 0.25s ease-out backwards;
     &:hover {
         cursor: pointer;
-        background-color: $orange-light;
+        border: 4px solid $green;
+        background-color: $green;
         box-shadow: 8px 12px $blue-dark2;
+
+        & .job-application__job-position,
+        & .job-application__date-created,
+        & .job-application__interview-description {
+            color: $slate-gray-dark;
+        }
+
     }
 
     &__company-name {
-        color: $blue-dark;
+        color: white;
         margin: 8px 0;
         font-size: 28px;
+        transition: 0.2s ease-out;
     }
 
     &__job-position--label {
@@ -53,11 +63,11 @@
     }
 
     &__interview-description {
-        color: $blue-dark;
-        border-top: 1px solid $blue-dark;
+        color: $green;
+        border-top: 1px solid white;
         padding: 8px 2px 0 2px;
         height: 172px;
-        
+        font-weight: bold;
         display: -webkit-box;
         -webkit-line-clamp: 7;
         -webkit-box-orient: vertical;

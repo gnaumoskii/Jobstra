@@ -3,7 +3,7 @@
     padding: 24px;
 
     &__options {
-        border-bottom: 1px solid $orange;
+        border-bottom: 1px solid $slate-gray;
         font-family: $montserrat;
         padding-bottom: 24px;
         margin: 12px;
@@ -16,11 +16,11 @@
             
             &__label {
                 letter-spacing: 2px;
-                color: $blue-dark;
+                color: $slate-gray-dark;
                 font-weight: 400;
                 width: 92px;
                 text-align: center;
-                background-color: $orange;
+                background-color: $green;
                 font-style: italic;
                 margin-bottom: 2px;
                 clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
@@ -31,36 +31,37 @@
                 margin-top: 4px;
                 background-color: transparent;
                 outline: none;
-                border: 2px solid $orange;
+                border: 2px solid $slate-gray;
                 border-radius: 4px;
                 padding: 8px;
                 width: 300px;
                 
-                color: $orange;
+                color: $green;
                 background-color: $blue-dark;
-                font-weight: 500;
+                font-weight: bold;
                 box-shadow: 4px 4px $blue-dark2;
                 transition: 0.2s ease-out;
                 &::placeholder {
-                    color: $orange;
-                    font-weight: 500;
+                    color: $slate-gray;
+                    font-weight: bold;
                     transition: 0.2s ease-out;
                 }
 
                 &:not(:disabled):hover {
                     box-shadow: 6px 6px $blue-dark2;
-                    border: 2px solid $orange-light;
-                    color: $orange-light;
+                    border: 2px solid $slate-gray;
+                    color: $green;
+                    
                     &::placeholder {
-                        color: $orange-light;
+                        color: $slate-gray;
                     }
                 }
 
                 &:disabled {
                     &::placeholder {
-                        color: $burgundy;
+                        color: $slate-gray-dark;
                     }
-                    border: 2px solid $burgundy;
+                    border: 2px solid $slate-gray-dark;
            
                 }
             }
@@ -68,22 +69,35 @@
 
         &__sort {
             appearance: none;
-            background-color: transparent;
-            color: $orange;
-            border: 2px solid $orange;
+            
+            background-color: $blue-dark;
+            color: $green;
+            border: 2px solid $green;
             border-radius: 4px;
             padding: 8px;
-            margin-left: 32px;
+            margin-left: auto;
             outline: none;
             transition: 0.2s ease-out;
             box-shadow: 4px 4px $blue-dark2;
             font-weight: bold;
 
 
+            & option {
+                color: $slate-gray;
+                font-weight: bold;
+                padding: 4px;
+            }
 
-            &:hover {
-                color: $orange-light;
-                border: 2px solid $orange-light;
+
+            &:not(:disabled):hover {
+                color: $green-light;
+                cursor: pointer;
+                border: 2px solid $green-light;
+            }
+
+            &:disabled {
+                color: $slate-gray-dark;
+                border: 2px solid $slate-gray-dark;
             }
 
             &-value {
@@ -98,49 +112,62 @@
             font-family: $montserrat;
             text-transform: uppercase;
             padding: 8px 16px;
-            border: 2px solid $orange;
+            border: 2px solid $green;
             margin-left: 12px;
             border-radius: 4px;
-            background-color: $orange;
+            background-color: $green;
             color: $blue-dark;
             font-weight: bold;
             box-shadow: 4px 4px $blue-dark2;
 
             transition: 0.2s ease-out;
             &:not(:disabled):hover {
-                background-color: $orange-light;
+                background-color: $green-light;
                 box-shadow: 6px 6px $blue-dark2;
-                border: 2px solid $orange-light;
+                border: 2px solid $green-light;
+
+                &:active {
+                    background-color: $slate-gray;
+                    border: 2px solid $slate-gray;
+                }
             }
 
             &:disabled {
-                background-color: $burgundy;
-                border: 2px solid $burgundy;
+                background-color: $slate-gray-dark;
+                border: 2px solid $slate-gray-dark;
                 cursor: default;
             }
         }
 
         &__btn-clear {
             @include button-default;
-            @include button-primary($blue-dark, $orange, $orange-light);
+            @include button-primary($blue-dark, $green, $green-light);
             text-transform: uppercase;
             padding: 8px 16px;
             margin-left: 12px;
             border-radius: 4px;
             font-weight: bold;
-            border: 2px solid $orange;
+            border: 2px solid $green;
             box-shadow: 4px 4px $blue-dark2;
 
             &:not(:disabled):hover {
-                border: 2px solid $orange-light;
+                border: 2px solid $green-light;
                 box-shadow: 6px 6px $blue-dark2;
+
+
+                &:active {
+                    color: $slate-gray;
+                    border: 2px solid $slate-gray;
+                }
             }
 
             &:disabled {
-                color: $burgundy;
-                border: 2px solid $burgundy;
+                color: $slate-gray-dark;
+                border: 2px solid $slate-gray-dark;
                 cursor: default;
             }
+
+
         }
     }
 
@@ -152,7 +179,7 @@
         list-style: none;
         font-family: $montserrat;
         &__status-message {
-            color: $orange;
+            color: $slate-gray;
             font-size: 20px;
             font-weight: 500;
             position: relative;
